@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark scroll-smooth" style="background-color: #070708; color: #F4F4F0;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,35 +12,76 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <script>
-      window.__loadPrebuiltAtelierVance = function () {
-        if (window.__atelierVanceBundleLoaded) return;
-        window.__atelierVanceBundleLoaded = true;
-        var cssLink = document.createElement('link');
-        cssLink.rel = 'stylesheet';
-        cssLink.href = './public/bundle/atelier-vance.css';
-        document.head.appendChild(cssLink);
-
-        var jsScript = document.createElement('script');
-        jsScript.type = 'module';
-        jsScript.src = './public/bundle/atelier-vance.js';
-        document.body.appendChild(jsScript);
-      };
-      if (window.location.hostname.indexOf('github.io') !== -1) {
-        window.addEventListener('DOMContentLoaded', function () {
-          if (!document.querySelector('script[src*="atelier-vance.js"]')) {
-            window.__loadPrebuiltAtelierVance();
-          }
-        });
+    <style>
+      :root {
+        --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-serif: 'Cormorant Garamond', Georgia, serif;
+        --font-mono: 'JetBrains Mono', monospace;
       }
-    </script>
+      html {
+        -webkit-tap-highlight-color: transparent;
+        scroll-behavior: smooth;
+        background-color: #070708;
+        color: #F4F4F0;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background-color: #070708;
+        color: #F4F4F0;
+        letter-spacing: 0.01em;
+        overflow-x: hidden;
+      }
+      .font-editorial {
+        font-family: var(--font-serif);
+      }
+      .font-mono-tabular {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @keyframes marqueeScroll {
+        0% { transform: translate3d(0%, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
+      }
+      .animate-editorial-marquee {
+        display: flex;
+        width: max-content;
+        animation: marqueeScroll 38s linear infinite;
+      }
+    </style>
   </head>
-  <body class="bg-[#070708] text-[#F4F4F0] antialiased selection:bg-[#E5A93C] selection:text-[#070708]">
+  <body class="bg-[#070708] text-[#F4F4F0] antialiased selection:bg-[#E5A93C] selection:text-[#070708]" style="background-color: #070708; color: #F4F4F0;">
     <div id="root"></div>
+    <script>
+      (function () {
+        var isGitHubPages = window.location.hostname.indexOf('github.io') !== -1;
+        var hasBuiltBundle = Boolean(document.querySelector('script[src*="atelier-vance.js"]'));
+        if (isGitHubPages && !hasBuiltBundle) {
+          var loader = document.createElement('script');
+          loader.src = './public/gh-pages-loader.js';
+          loader.onerror = function () {
+            var altLoader = document.createElement('script');
+            altLoader.src = './gh-pages-loader.js';
+            document.head.appendChild(altLoader);
+          };
+          document.head.appendChild(loader);
+        }
+      })();
+    </script>
     <script
       type="module"
       src="/src/main.tsx"
-      onerror="window.__loadPrebuiltAtelierVance && window.__loadPrebuiltAtelierVance()"
+      onerror="if(!window.__ATELIER_VANCE_BOOTSTRAPPED__){var s=document.createElement('script');s.src='./public/gh-pages-loader.js';document.head.appendChild(s);}"
     ></script>
   </body>
 </html>
