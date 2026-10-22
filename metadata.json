@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Vance — Photography Studio & Production House",
+  "description": "High-fashion, architectural, and commercial photography studio featuring a medium-format portfolio gallery, client booking engine, and backend portfolio CMS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
