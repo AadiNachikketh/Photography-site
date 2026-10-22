@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && mkdir -p public/bundle && cp dist/assets/atelier-vance.js dist/assets/atelier-vance.css public/bundle/",
     "start": "node --import tsx server.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
