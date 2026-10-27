@@ -31,13 +31,16 @@ interface BackendStudioDrawerProps {
 }
 
 const PRESET_BACKEND_PLATES = [
-  { label: 'Plate 01 · Silhouette Alabaster', url: '/api/plates/silhouette-alabaster.svg' },
-  { label: 'Plate 02 · Brutalist Pavilion', url: '/api/plates/brutalist-pavilion.svg' },
-  { label: 'Plate 03 · Horology Macro', url: '/api/plates/horology-macro.svg' },
-  { label: 'Plate 04 · Silver Portrait', url: '/api/plates/silver-portrait.svg' },
-  { label: 'Plate 05 · Smoked Amber Vessel', url: '/api/plates/amber-vessel.svg' },
-  { label: 'Plate 06 · Nocturne Drapery', url: '/api/plates/nocturne-drapery.svg' },
-  { label: 'Plate 07 · Gypsum Stairwell', url: '/api/plates/gypsum-stairwell.svg' },
+  { label: 'Photo 01 · Editorial Platinum Blonde', url: '/assets/aistudio/pexels-photo-7462603_cfbc76d1.jpg' },
+  { label: 'Photo 02 · Manhattan Memorial & Dusk', url: '/assets/aistudio/images__2__32f9c414.jpg' },
+  { label: 'Photo 03 · Ignition & Berry Lip Macro', url: '/assets/aistudio/camera-angle-extreme-close-up-rodolfoclix_12769e5d.jpg' },
+  { label: 'Photo 04 · Cliffside Bridal Veil', url: '/assets/aistudio/creative-wedding-photography_00187c97.jpg' },
+  { label: 'Photo 05 · Jumping Spider Bio-Optic', url: '/assets/aistudio/31_a4b61f36.jpg' },
+  { label: 'Photo 06 · Heterochromatic Iris Macro', url: '/assets/aistudio/na-cover_ae278ee9.jpg' },
+  { label: 'Photo 07 · Golden Sunset Leap', url: '/assets/aistudio/action-photography-101_9570506e.jpg' },
+  { label: 'Photo 08 · Country Road Toddlers', url: '/assets/aistudio/wide_20847189.jpeg' },
+  { label: 'Photo 09 · Cobalt Door Model Portrait', url: '/assets/aistudio/Portrait_photography_shot_of_model_39c143b3.jpg' },
+  { label: 'Photo 10 · Golden Meadow Toy Biplane', url: '/assets/aistudio/types-of-photography-iwona-podlasinska-child-plane_27f9a1f9.jpg' },
 ];
 
 export const BackendStudioDrawer: React.FC<BackendStudioDrawerProps> = ({
@@ -65,7 +68,7 @@ export const BackendStudioDrawer: React.FC<BackendStudioDrawerProps> = ({
   const [location, setLocation] = useState('Stage A · North Daylight Loft, NY');
   const [bentoSpan, setBentoSpan] = useState<BentoSpan>('1x1');
   const [aspectRatio, setAspectRatio] = useState<'16:9' | '4:3' | '3:4' | '1:1'>('4:3');
-  const [imageUrl, setImageUrl] = useState('/api/plates/silhouette-alabaster.svg');
+  const [imageUrl, setImageUrl] = useState('/assets/aistudio/pexels-photo-7462603_cfbc76d1.jpg');
   const [camera, setCamera] = useState('Hasselblad H6D-100c');
   const [lens, setLens] = useState('HC 80mm f/2.8');
   const [aperture, setAperture] = useState('f/5.6');

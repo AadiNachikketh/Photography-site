@@ -25,7 +25,7 @@ const DISCIPLINES: {
     title: 'Haute Couture & Editorial Lookbooks',
     category: 'Editorial & Fashion',
     subtitle: 'Sculptural lighting for fashion houses, designer archives, and global print campaigns.',
-    imageUrl: '/api/plates/silhouette-alabaster.svg',
+    imageUrl: '/assets/aistudio/images__5__cd21517d.jpg',
     description:
       'We combine 18-foot north-facing industrial casement daylight with high-speed Profoto Pro-11 strobe shaping to render fabric drape, metallic embroidery, and silhouette geometry without artificial flatness.',
     specs: [
@@ -40,7 +40,7 @@ const DISCIPLINES: {
     title: 'Architectural & Spatial Monographs',
     category: 'Architecture & Spatial',
     subtitle: 'Zero-distortion technical camera documentation for architects, museums, and pavilions.',
-    imageUrl: '/api/plates/brutalist-pavilion.svg',
+    imageUrl: '/assets/aistudio/low-angle-greyscale-building-with-modern-brutalist-architecture-sunlight_181624-21352_999d8e52.jpg',
     description:
       'Using Phase One XT 150MP field cameras paired with Rodenstock tilt-shift optics, we record buildings across full dawn-to-dusk solar trajectories while maintaining mathematically parallel verticals.',
     specs: [
@@ -55,7 +55,7 @@ const DISCIPLINES: {
     title: 'Haute Horology, Jewelry & Macro Still-Life',
     category: 'Commercial Still Life',
     subtitle: 'Sub-millimeter focus-stacked plates on pneumatic anti-vibration optical tables.',
-    imageUrl: '/api/plates/horology-macro.svg',
+    imageUrl: '/assets/aistudio/6571dc95832885.5ea088774b854_d8027c19.jpg',
     description:
       'Engineered in Stage C for timepieces, fragrance flacons, and industrial design objects. Automated 40-to-60 frame focus stacking eliminates optical diffraction while fiber-optic snoots carve tourbillon bridges.',
     specs: [
@@ -70,7 +70,7 @@ const DISCIPLINES: {
     title: 'Fine Art & Executive Sitters Archive',
     category: 'Fine Art Portrait',
     subtitle: 'Closed-set monochromatic and 16-bit color sittings for cultural & executive leaders.',
-    imageUrl: '/api/plates/silver-portrait.svg',
+    imageUrl: '/assets/aistudio/GettyImages-544268210_f4e8d19d.jpg',
     description:
       'Intimate, unrushed portrait sittings utilizing true achromatic medium-format sensors and feathered octabanks. Designed for authors, conductors, founders, and museum publications.',
     specs: [
