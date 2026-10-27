@@ -8,6 +8,7 @@ import type {
   StudioInquiry,
   StudioStage,
 } from '../types/studio';
+import { EMBEDDED_STUDIO_PHOTOS } from './embeddedStudioPhotos';
 
 export interface StudioDatabase {
   portfolio: PortfolioItem[];
@@ -310,6 +311,10 @@ export function getStudioPlateCandidateUrls(src: string): string[] {
 
   const fileName = normalizedSrc.split('/').pop() || '';
   const candidates: string[] = [];
+
+  if (fileName && EMBEDDED_STUDIO_PHOTOS[fileName]) {
+    candidates.push(EMBEDDED_STUDIO_PHOTOS[fileName]);
+  }
 
   if (typeof window !== 'undefined') {
     const embeddedCache = (window as unknown as { __ATELIER_VANCE_EMBEDDED_PHOTOS__?: Record<string, string> })

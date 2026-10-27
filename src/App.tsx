@@ -36,7 +36,7 @@ import { LightboxModal } from './components/LightboxModal';
 import { BackendStudioDrawer } from './components/BackendStudioDrawer';
 import { DEFAULT_STUDIO_DATABASE, type StudioDatabase } from './data/studioFallbackData';
 
-const LOCAL_STORAGE_KEY = 'atelier_vance_studio_db_v4';
+const LOCAL_STORAGE_KEY = 'atelier_vance_studio_db_v5';
 
 function loadLocalStudioDb(): StudioDatabase {
   try {
@@ -44,6 +44,7 @@ function loadLocalStudioDb(): StudioDatabase {
       window.localStorage.removeItem('atelier_vance_studio_db_v1');
       window.localStorage.removeItem('atelier_vance_studio_db_v2');
       window.localStorage.removeItem('atelier_vance_studio_db_v3');
+      window.localStorage.removeItem('atelier_vance_studio_db_v4');
     }
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!raw) return DEFAULT_STUDIO_DATABASE;

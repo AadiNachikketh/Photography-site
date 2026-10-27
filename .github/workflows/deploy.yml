@@ -23,21 +23,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build production bundle
+      - name: Assemble static production site
         run: |
-          npm run build
-          mkdir -p dist/public
-          cp -r public/assets dist/public/assets || true
+          mkdir -p dist/assets dist/public/bundle dist/public/assets
+          cp index.html dist/index.html
+          cp -r public/assets/* dist/assets/ || true
+          cp -r public/assets/* dist/public/assets/ || true
+          cp public/bundle/atelier-vance.js dist/assets/atelier-vance.js || true
+          cp public/bundle/atelier-vance.css dist/assets/atelier-vance.css || true
+          cp public/bundle/atelier-vance.js dist/public/bundle/atelier-vance.js || true
+          cp public/bundle/atelier-vance.css dist/public/bundle/atelier-vance.css || true
+          cp public/studio-photos-cache.js dist/studio-photos-cache.js || true
           cp public/studio-photos-cache.js dist/public/studio-photos-cache.js || true
+          cp public/gh-pages-loader.js dist/gh-pages-loader.js || true
           cp public/gh-pages-loader.js dist/public/gh-pages-loader.js || true
+          cp -r src dist/src || true
+          touch dist/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -51,6 +51,7 @@ window.__bootstrapAtelierVanceGitHubPages = async function bootstrapAtelierVance
 
     const MODULE_GRAPH = [
       'src/types/studio.ts',
+      'src/data/embeddedStudioPhotos.ts',
       'src/data/studioFallbackData.ts',
       'src/components/ResilientPlateImage.tsx',
       'src/components/HomePortfolioScrollPage.tsx',
@@ -78,9 +79,10 @@ window.__bootstrapAtelierVanceGitHubPages = async function bootstrapAtelierVance
     };
 
     const rawSources = {};
+    const cacheBust = Date.now();
     await Promise.all(
       MODULE_GRAPH.map(async (relPath) => {
-        const res = await fetch(`./${relPath}`);
+        const res = await fetch(`./${relPath}?v=${cacheBust}`, { cache: 'no-store' });
         if (!res.ok) {
           throw new Error(`Failed to fetch ./${relPath} (${res.status})`);
         }

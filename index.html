@@ -63,29 +63,46 @@
   <body class="bg-[#070708] text-[#F4F4F0] antialiased selection:bg-[#E5A93C] selection:text-[#070708]" style="background-color: #070708; color: #F4F4F0;">
     <div id="root"></div>
     <script
-      src="./public/studio-photos-cache.js"
-      onerror="this.onerror=null;this.src='./studio-photos-cache.js';"
+      src="./public/studio-photos-cache.js?v=5"
+      onerror="this.onerror=null;this.src='./studio-photos-cache.js?v=5';"
     ></script>
     <script>
       (function () {
         var isGitHubPages = window.location.hostname.indexOf('github.io') !== -1;
         var hasBuiltBundle = Boolean(document.querySelector('script[src*="atelier-vance.js"]'));
         if (isGitHubPages && !hasBuiltBundle) {
-          var loader = document.createElement('script');
-          loader.src = './public/gh-pages-loader.js';
-          loader.onerror = function () {
-            var altLoader = document.createElement('script');
-            altLoader.src = './gh-pages-loader.js';
-            document.head.appendChild(altLoader);
+          var css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = './public/bundle/atelier-vance.css?v=5';
+          css.onerror = function () {
+            var altCss = document.createElement('link');
+            altCss.rel = 'stylesheet';
+            altCss.href = './bundle/atelier-vance.css?v=5';
+            document.head.appendChild(altCss);
           };
-          document.head.appendChild(loader);
+          document.head.appendChild(css);
+
+          var bundle = document.createElement('script');
+          bundle.type = 'module';
+          bundle.src = './public/bundle/atelier-vance.js?v=5';
+          bundle.onerror = function () {
+            var loader = document.createElement('script');
+            loader.src = './public/gh-pages-loader.js?v=5';
+            loader.onerror = function () {
+              var altLoader = document.createElement('script');
+              altLoader.src = './gh-pages-loader.js?v=5';
+              document.head.appendChild(altLoader);
+            };
+            document.head.appendChild(loader);
+          };
+          document.head.appendChild(bundle);
         }
       })();
     </script>
     <script
       type="module"
       src="/src/main.tsx"
-      onerror="if(!window.__ATELIER_VANCE_BOOTSTRAPPED__){var s=document.createElement('script');s.src='./public/gh-pages-loader.js';document.head.appendChild(s);}"
+      onerror="if(!window.__ATELIER_VANCE_BOOTSTRAPPED__&&!document.querySelector('script[src*=&quot;atelier-vance.js&quot;]')){var s=document.createElement('script');s.src='./public/gh-pages-loader.js?v=5';document.head.appendChild(s);}"
     ></script>
   </body>
 </html>
