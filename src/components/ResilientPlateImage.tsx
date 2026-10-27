@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Aperture } from 'lucide-react';
-import { resolveStudioPlateUrl } from '../data/studioFallbackData';
+import { getStudioPlateCandidateUrls } from '../data/studioFallbackData';
 
 interface ResilientPlateImageProps {
   src: string;
@@ -19,10 +19,16 @@ export const ResilientPlateImage: React.FC<ResilientPlateImageProps> = ({
   dominantTone = '#141416',
   className = '',
 }) => {
-  const [hasError, setHasError] = useState(false);
-  const resolvedSrc = resolveStudioPlateUrl(src);
+  const candidates = useMemo(() => getStudioPlateCandidateUrls(src), [src]);
+  const [candidateIndex, setCandidateIndex] = useState(0);
 
-  if (hasError || !resolvedSrc) {
+  useEffect(() => {
+    setCandidateIndex(0);
+  }, [src]);
+
+  const activeSrc = candidates[candidateIndex] || '';
+
+  if (!activeSrc) {
     return (
       <div
         className={`relative flex flex-col justify-between p-6 overflow-hidden bg-[#111114] text-[#F4F4F0] ${className}`}
@@ -51,11 +57,14 @@ export const ResilientPlateImage: React.FC<ResilientPlateImageProps> = ({
 
   return (
     <img
-      src={resolvedSrc}
+      src={activeSrc}
       alt={alt}
       referrerPolicy="no-referrer"
-      onError={() => setHasError(true)}
+      onError={() => {
+        setCandidateIndex((prev) => prev + 1);
+      }}
       className={className}
     />
   );
 };
+

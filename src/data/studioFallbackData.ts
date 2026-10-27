@@ -279,21 +279,81 @@ export function renderPhotographicPlateSvg(plateSlug: string): string {
   }
 }
 
-export function resolveStudioPlateUrl(src: string): string {
-  if (!src) return '';
-  if (src.startsWith('/api/plates/')) {
-    const svgMarkup = renderPhotographicPlateSvg(src);
-    return `data:image/svg+xml;utf8,${encodeURIComponent(svgMarkup)}`;
-  }
-  if (typeof window !== 'undefined' && src.startsWith('/assets/')) {
-    const pathSegments = window.location.pathname.split('/').filter(Boolean);
-    if (window.location.hostname.indexOf('github.io') !== -1 && pathSegments.length > 0) {
-      const repoName = pathSegments[0];
-      return `/${repoName}${src}`;
+const LEGACY_PLATE_TO_PHOTO_MAP: Record<string, string> = {
+  'silhouette-alabaster': '/assets/aistudio/pexels-photo-7462603_cfbc76d1.jpg',
+  'brutalist-pavilion': '/assets/aistudio/images__2__32f9c414.jpg',
+  'horology-macro': '/assets/aistudio/31_a4b61f36.jpg',
+  'silver-portrait': '/assets/aistudio/wide_20847189.jpeg',
+  'amber-vessel': '/assets/aistudio/Portrait_photography_shot_of_model_39c143b3.jpg',
+  'nocturne-drapery': '/assets/aistudio/creative-wedding-photography_00187c97.jpg',
+  'gypsum-stairwell': '/assets/aistudio/na-cover_ae278ee9.jpg',
+  'stage-a-loft': '/assets/aistudio/pexels-photo-7462603_cfbc76d1.jpg',
+};
+
+export function getStudioPlateCandidateUrls(src: string): string[] {
+  if (!src) return [];
+
+  let normalizedSrc = src.trim();
+  if (normalizedSrc.startsWith('/api/plates/')) {
+    const cleanSlug = normalizedSrc.replace(/^\/api\/plates\//i, '').replace(/\.svg$/i, '');
+    if (LEGACY_PLATE_TO_PHOTO_MAP[cleanSlug]) {
+      normalizedSrc = LEGACY_PLATE_TO_PHOTO_MAP[cleanSlug];
+    } else {
+      const svgMarkup = renderPhotographicPlateSvg(normalizedSrc);
+      return [`data:image/svg+xml;utf8,${encodeURIComponent(svgMarkup)}`];
     }
   }
-  return src;
+
+  if (normalizedSrc.startsWith('data:') || normalizedSrc.startsWith('http://') || normalizedSrc.startsWith('https://')) {
+    return [normalizedSrc];
+  }
+
+  const fileName = normalizedSrc.split('/').pop() || '';
+  const candidates: string[] = [];
+
+  if (typeof window !== 'undefined') {
+    const embeddedCache = (window as unknown as { __ATELIER_VANCE_EMBEDDED_PHOTOS__?: Record<string, string> })
+      .__ATELIER_VANCE_EMBEDDED_PHOTOS__;
+    if (embeddedCache && fileName && embeddedCache[fileName]) {
+      candidates.push(embeddedCache[fileName]);
+    }
+  }
+
+  const cleanAssetPath = normalizedSrc.replace(/^\.?\//, '').replace(/^public\//, '');
+
+  if (typeof window !== 'undefined') {
+    const isGitHubPages = window.location.hostname.indexOf('github.io') !== -1;
+    const isZeroBuildBootstrapped = Boolean(
+      (window as unknown as { __ATELIER_VANCE_BOOTSTRAPPED__?: boolean }).__ATELIER_VANCE_BOOTSTRAPPED__
+    );
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const repoName = pathSegments[0] || '';
+
+    if (isZeroBuildBootstrapped || isGitHubPages) {
+      candidates.push(`./public/${cleanAssetPath}`);
+      candidates.push(`./${cleanAssetPath}`);
+      if (repoName) {
+        candidates.push(`/${repoName}/public/${cleanAssetPath}`);
+        candidates.push(`/${repoName}/${cleanAssetPath}`);
+      }
+      candidates.push(`/${cleanAssetPath}`);
+    } else {
+      candidates.push(`/${cleanAssetPath}`);
+      candidates.push(`./${cleanAssetPath}`);
+      candidates.push(`./public/${cleanAssetPath}`);
+    }
+  } else {
+    candidates.push(`/${cleanAssetPath}`);
+  }
+
+  return Array.from(new Set(candidates));
 }
+
+export function resolveStudioPlateUrl(src: string): string {
+  const candidates = getStudioPlateCandidateUrls(src);
+  return candidates[0] || src || '';
+}
+
 
 export const INITIAL_PORTFOLIO: PortfolioItem[] = [
   {

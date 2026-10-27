@@ -27,13 +27,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build production bundle
-        run: npm run build
+        run: |
+          npm run build
+          mkdir -p dist/public
+          cp -r public/assets dist/public/assets || true
+          cp public/studio-photos-cache.js dist/public/studio-photos-cache.js || true
+          cp public/gh-pages-loader.js dist/public/gh-pages-loader.js || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

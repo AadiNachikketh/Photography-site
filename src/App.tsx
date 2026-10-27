@@ -36,21 +36,31 @@ import { LightboxModal } from './components/LightboxModal';
 import { BackendStudioDrawer } from './components/BackendStudioDrawer';
 import { DEFAULT_STUDIO_DATABASE, type StudioDatabase } from './data/studioFallbackData';
 
-const LOCAL_STORAGE_KEY = 'atelier_vance_studio_db_v2';
+const LOCAL_STORAGE_KEY = 'atelier_vance_studio_db_v4';
 
 function loadLocalStudioDb(): StudioDatabase {
   try {
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem('atelier_vance_studio_db_v1');
+      window.localStorage.removeItem('atelier_vance_studio_db_v2');
+      window.localStorage.removeItem('atelier_vance_studio_db_v3');
     }
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!raw) return DEFAULT_STUDIO_DATABASE;
     const parsed = JSON.parse(raw) as Partial<StudioDatabase>;
 
-    // If cache still contains legacy SVG plates, refresh to real photographs
-    const hasLegacySvg = parsed.portfolio?.some(
-      (p) => p.imageUrl?.includes('/api/plates/') || p.imageUrl?.endsWith('.svg')
-    );
+    // If cache still contains legacy SVG plates in portfolio, stages, or journal, refresh to real photographs
+    const hasLegacySvg =
+      parsed.portfolio?.some(
+        (p) => p.imageUrl?.includes('/api/plates/') || p.imageUrl?.endsWith('.svg')
+      ) ||
+      parsed.stages?.some(
+        (s) => s.previewImageUrl?.includes('/api/plates/') || s.previewImageUrl?.endsWith('.svg')
+      ) ||
+      parsed.journal?.some(
+        (j) => j.coverImageUrl?.includes('/api/plates/') || j.coverImageUrl?.endsWith('.svg')
+      );
+
     if (hasLegacySvg) {
       window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_STUDIO_DATABASE));
       return DEFAULT_STUDIO_DATABASE;

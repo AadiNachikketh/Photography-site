@@ -35,6 +35,18 @@ window.__bootstrapAtelierVanceGitHubPages = async function bootstrapAtelierVance
     await Promise.all([
       loadScript('https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'),
       loadScript('https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.9/babel.min.js'),
+      (async () => {
+        if (window.__ATELIER_VANCE_EMBEDDED_PHOTOS__) return;
+        try {
+          await loadScript('./public/studio-photos-cache.js');
+        } catch {
+          try {
+            await loadScript('./studio-photos-cache.js');
+          } catch {
+            // Will fall back to direct ./public/assets/aistudio/ paths
+          }
+        }
+      })(),
     ]);
 
     const MODULE_GRAPH = [
